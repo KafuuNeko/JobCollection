@@ -56,7 +56,7 @@ object DBTableStudents {
         val students = ArrayList<StudentRecord>()
 
         DBJobCollection.connect.prepareStatement(
-            "SELECT students.student_id, students.student_name, students.student_sex, students.student_class, students.student_major FROM students, uploads WHERE uploads.job_id = ? AND uploads.student_id != students.student_id",
+            "SELECT * FROM students WHERE student_id NOT IN(SELECT uploads.student_id FROM uploads WHERE uploads.job_id = ?)",
             ResultSet.TYPE_SCROLL_INSENSITIVE,
             ResultSet.CONCUR_READ_ONLY
         )?.use { stmt ->
