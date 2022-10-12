@@ -81,6 +81,10 @@ class UploadJob : HttpServlet() {
         return try {
             val studentRecord = DBTableStudents.queryById(studentId) ?: throw Exception("学号不存在")
 
+            if (name != studentRecord.studentName) {
+                throw Exception("学号与姓名不匹配")
+            }
+
             val uploadRecord = DBTableUploads.queryRecord(jobId, studentId)
             uploadRecord?.let {
                 val oldFile = File(it.filePath)
@@ -94,13 +98,17 @@ class UploadJob : HttpServlet() {
             val jobDir = "${Application.rootDirPath}/Jobs/Uploads/$jobId"
             val filePath = "$jobDir/$studentId-${studentRecord.studentName}.${fileSuffix ?: "data"}"
             file.inputStream?.use { inputStream ->
+                if (file.size > Application.uploadMaxSize) {
+                    throw Exception("您上传的文件尺寸超出(${Application.uploadMaxSize.toFloat() / 1024 / 1024}M)限制")
+                }
+
                 Files.createDirectories(Path(jobDir))
                 val outStream = FileOutputStream(filePath)
                 outStream.use { outputStream ->
-                    var byte = inputStream.read()
-                    while (byte != -1) {
-                        outputStream.write(byte)
-                        byte = inputStream.read()
+                    var bytes = inputStream.readNBytes(4096)
+                    while (bytes != null && bytes.isNotEmpty()) {
+                        outputStream.write(bytes)
+                        bytes = inputStream.readNBytes(4096)
                     }
                 }
             } ?: throw Exception("无法保存文件")
@@ -111,7 +119,7 @@ class UploadJob : HttpServlet() {
 
             makeBaseResultJson(0, "您已成功提交作业")
         } catch (e: Exception) {
-            e.printStackTrace()
+            //e.printStackTrace()
             makeBaseResultJson(-1, "${e.message}")
         }
     }

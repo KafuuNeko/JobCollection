@@ -1,16 +1,12 @@
 package cc.kafuu.dao
 
 import cc.kafuu.Application
-import cc.kafuu.bean.UploadRecord
-import cc.kafuu.utils.JsonUtils
-import com.google.gson.JsonObject
 import java.sql.Connection
 import java.sql.DriverManager
-import java.sql.ResultSet
 
 object DBJobCollection {
 
-    var connect: Connection
+    val connect: Connection
 
     object Config {
         val host: String
@@ -34,6 +30,7 @@ object DBJobCollection {
         Class.forName("com.mysql.cj.jdbc.Driver")
         connect =
             DriverManager.getConnection("jdbc:mysql://${Config.host}/${Config.dbName}", Config.user, Config.password)
+        println("!!! Database connected")
     }
 
 }

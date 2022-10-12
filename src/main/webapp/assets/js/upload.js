@@ -16,6 +16,11 @@ function uploadTask() {
         return;
     }
 
+    if (document.forms[0].File.files[0].size > 33554432) {
+        swal("文件过大", "您所选择的文件尺寸超出最大限制(32M)", "error");
+        return;
+    }
+
     document.forms[0].StudentID.value = document.forms[0].StudentID.value.replace(/\s/g, "")
     document.forms[0].Name.value = document.forms[0].Name.value.replace(/(^\s*)|(\s*$)/g, "")
 
@@ -60,7 +65,6 @@ function studentIdChange() {
                 }
             },
             error: function () {
-
                 document.forms[0].Name.disabled = false
             }
         })

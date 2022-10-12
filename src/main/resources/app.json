@@ -6,6 +6,7 @@
     "db_name": "job_collection"
   },
   "upload": {
-    "root_dir": "/Users/kafuu/Desktop/JobUpload"
+    "root_dir": "/Users/kafuu/Desktop/JobUpload",
+    "max_size": 33554432
   }
 }
