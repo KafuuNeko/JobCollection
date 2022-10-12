@@ -1,0 +1,50 @@
+plugins {
+    id 'java'
+    id 'org.jetbrains.kotlin.jvm' version '1.6.20'
+    id 'war'
+}
+
+group 'cc.kafuu'
+version '1.0-debug'
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    junitVersion = '5.8.2'
+}
+
+sourceCompatibility = "11"
+targetCompatibility = "11"
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+[compileKotlin, compileTestKotlin].forEach {
+    it.kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+
+dependencies {
+    implementation 'javax.servlet:javax.servlet-api:4.0.1'
+
+    implementation 'commons-fileupload:commons-fileupload:1.4'
+    implementation 'org.apache.commons:commons-io:1.3.2'
+
+    implementation 'mysql:mysql-connector-java:8.0.30'
+
+    implementation 'com.google.code.gson:gson:2.9.1'
+
+    implementation 'javax.servlet.jsp:javax.servlet.jsp-api:2.3.3'
+
+    testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+}
+
+test {
+    useJUnitPlatform()
+}

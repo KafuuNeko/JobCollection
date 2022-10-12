@@ -1,0 +1,11 @@
+{
+  "db": {
+    "host": "127.0.0.1:3306",
+    "user": "root",
+    "password": "12345678",
+    "db_name": "job_collection"
+  },
+  "upload": {
+    "root_dir": "/Users/kafuu/Desktop/JobUpload"
+  }
+}
