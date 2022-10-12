@@ -59,7 +59,7 @@
 <script src="assets/js/jquery-3.6.1.min.js"></script>
 <script src="assets/js/sweetalert.min.js"></script>
 
-<script src="assets/js/upload.js?version=1.2"></script>
+<script src="assets/js/upload.js?version=1.4"></script>
 
 </body>
 

@@ -57,7 +57,7 @@ function studentIdChange() {
         $.ajax({
             url: "student/query",
             type: "post",
-            data: "StudentID=" + document.forms[0].StudentID.value.replace(/(^\s*)|(\s*$)/g, ""),
+            data: "query=student&student_id=" + document.forms[0].StudentID.value.replace(/(^\s*)|(\s*$)/g, ""),
             success: function (result) {
                 document.forms[0].Name.disabled = false
                 if (result.code === 0) {
@@ -78,7 +78,7 @@ function nameChange() {
         $.ajax({
             url: "student/query",
             type: "post",
-            data: "StudentName=" + name,
+            data: "query=student&student_name=" + name,
             success: function (result) {
                 document.forms[0].StudentID.disabled = false
                 if (result.code === 0) {

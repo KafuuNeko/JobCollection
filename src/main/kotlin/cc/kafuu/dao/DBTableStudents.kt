@@ -4,7 +4,7 @@ import cc.kafuu.bean.StudentRecord
 import java.sql.ResultSet
 
 object DBTableStudents {
-    fun queryById(id: Long): StudentRecord? {
+    public fun queryById(id: Long): StudentRecord? {
         return DBJobCollection.connect.prepareStatement(
             "SELECT * FROM students WHERE student_id=?",
             ResultSet.TYPE_SCROLL_INSENSITIVE,
@@ -25,7 +25,7 @@ object DBTableStudents {
         }
     }
 
-    fun queryByName(name: String): List<StudentRecord> {
+    public fun queryByName(name: String): List<StudentRecord> {
         val records = ArrayList<StudentRecord>()
 
         DBJobCollection.connect.prepareStatement(
@@ -50,5 +50,32 @@ object DBTableStudents {
         }
 
         return records
+    }
+
+    public fun queryListOfMissingAssignments(jobId: Long): List<StudentRecord> {
+        val students = ArrayList<StudentRecord>()
+
+        DBJobCollection.connect.prepareStatement(
+            "SELECT students.student_id, students.student_name, students.student_sex, students.student_class, students.student_major FROM students, uploads WHERE uploads.job_id = ? AND uploads.student_id != students.student_id",
+            ResultSet.TYPE_SCROLL_INSENSITIVE,
+            ResultSet.CONCUR_READ_ONLY
+        )?.use { stmt ->
+            stmt.setLong(1, jobId)
+            stmt.executeQuery()?.use { resultSet ->
+                while (resultSet.next()) {
+                    students.add(
+                        StudentRecord(
+                            resultSet.getLong(1),
+                            resultSet.getString(2),
+                            resultSet.getString(3),
+                            resultSet.getInt(4),
+                            resultSet.getString(5)
+                        )
+                    )
+                }
+            }
+        }
+
+        return students;
     }
 }

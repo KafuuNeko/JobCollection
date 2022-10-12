@@ -4,7 +4,7 @@ import java.sql.ResultSet
 
 object DBTableConfig {
 
-    fun read(key: String) = try {
+    public fun read(key: String) = try {
         DBJobCollection.connect.prepareStatement(
             "SELECT `value` FROM config WHERE `key`=?",
             ResultSet.TYPE_SCROLL_INSENSITIVE,

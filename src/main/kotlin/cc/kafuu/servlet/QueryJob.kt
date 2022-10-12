@@ -28,12 +28,7 @@ class QueryJob : HttpServlet() {
 
         val jobsJson = JsonArray()
         for (job in jobList) {
-            val element = JsonObject()
-            element.addProperty("job_id", job.jobId)
-            element.addProperty("job_name", job.jobName)
-            element.addProperty("job_start_time", job.startTime.toString())
-            element.addProperty("job_end_time", job.endTime.toString())
-            jobsJson.add(element)
+            jobsJson.add(job.toJsonObject())
         }
 
         result.add("jobs", jobsJson)

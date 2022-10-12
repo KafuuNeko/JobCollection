@@ -4,7 +4,7 @@ import cc.kafuu.bean.JobRecord
 import java.sql.ResultSet
 
 object DBTableJobs {
-    fun getAllJob(validOnly: Boolean = true): List<JobRecord> {
+    public fun getAllJob(validOnly: Boolean = true): List<JobRecord> {
         val records = ArrayList<JobRecord>()
         DBJobCollection.connect.prepareStatement(
             "SELECT * FROM jobs WHERE end_time>now() && start_time<now()",
