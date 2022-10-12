@@ -1,4 +1,4 @@
-function uploadTask() {
+function uploadTask(maxSize) {
     if (document.forms[0].JobID.value === "") {
         swal("表单不完整", "请选择正确的作业", "error");
         return;
@@ -16,8 +16,8 @@ function uploadTask() {
         return;
     }
 
-    if (document.forms[0].File.files[0].size > 33554432) {
-        swal("文件过大", "您所选择的文件尺寸超出最大限制(32M)", "error");
+    if (document.forms[0].File.files[0].size > maxSize) {
+        swal("文件过大", "您所选择的文件尺寸超出最大限制(" + maxSize / 1024 / 1024 + "M)", "error");
         return;
     }
 

@@ -1,6 +1,7 @@
 <%@ page import="cc.kafuu.dao.DBTableJobs" %>
 <%@ page import="cc.kafuu.bean.JobRecord" %>
 <%@ page import="java.util.List" %>
+<%@ page import="cc.kafuu.Application" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <!DOCTYPE html>
@@ -45,7 +46,7 @@
                             <div class="mb-3"><input class="form-control" type="text" name="Name" placeholder="姓名"></div>
                             <div class="mb-3"><input class="form-control" type="file" name="File"></div>
                             <div class="mb-3"><input class="btn btn-primary d-block w-100" type="button" name="Upload"
-                                                     onclick="uploadTask()" value="提交作业"></div>
+                                                     onclick="uploadTask(<%=Application.INSTANCE.getUploadMaxSize()%>)" value="提交作业"></div>
                         </form>
                     </div>
                 </div>
@@ -58,7 +59,7 @@
 <script src="assets/js/jquery-3.6.1.min.js"></script>
 <script src="assets/js/sweetalert.min.js"></script>
 
-<script src="assets/js/upload.js?version=1.6"></script>
+<script src="assets/js/upload.js?version=1.2"></script>
 
 </body>
 
