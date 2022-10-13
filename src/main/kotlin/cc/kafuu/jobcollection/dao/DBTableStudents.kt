@@ -1,6 +1,6 @@
-package cc.kafuu.dao
+package cc.kafuu.jobcollection.dao
 
-import cc.kafuu.bean.StudentRecord
+import cc.kafuu.jobcollection.bean.StudentRecord
 import java.sql.ResultSet
 
 object DBTableStudents {

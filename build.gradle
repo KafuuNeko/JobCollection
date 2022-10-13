@@ -41,6 +41,9 @@ dependencies {
 
     implementation 'javax.servlet.jsp:javax.servlet.jsp-api:2.3.3'
 
+    implementation 'io.github.microutils:kotlin-logging:3.0.0'
+    implementation 'org.slf4j:slf4j-simple:2.0.3'
+
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
 }

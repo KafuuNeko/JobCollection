@@ -1,4 +1,4 @@
-package cc.kafuu.bean
+package cc.kafuu.jobcollection.bean
 
 import java.sql.Time
 

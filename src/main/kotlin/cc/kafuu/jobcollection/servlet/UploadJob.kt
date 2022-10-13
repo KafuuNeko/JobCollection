@@ -1,9 +1,9 @@
-package cc.kafuu.servlet
+package cc.kafuu.jobcollection.servlet
 
-import cc.kafuu.Application
-import cc.kafuu.dao.DBTableStudents
-import cc.kafuu.dao.DBTableUploads
-import cc.kafuu.utils.JsonUtils.makeBaseResultJson
+import cc.kafuu.jobcollection.Application
+import cc.kafuu.jobcollection.dao.DBTableStudents
+import cc.kafuu.jobcollection.dao.DBTableUploads
+import cc.kafuu.jobcollection.utils.JsonUtils.makeBaseResultJson
 import com.google.gson.JsonObject
 import org.apache.commons.fileupload.FileItem
 import org.apache.commons.fileupload.disk.DiskFileItemFactory

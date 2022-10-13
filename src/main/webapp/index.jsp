@@ -1,7 +1,7 @@
-<%@ page import="cc.kafuu.dao.DBTableJobs" %>
-<%@ page import="cc.kafuu.bean.JobRecord" %>
+<%@ page import="cc.kafuu.jobcollection.dao.DBTableJobs" %>
+<%@ page import="cc.kafuu.jobcollection.bean.JobRecord" %>
 <%@ page import="java.util.List" %>
-<%@ page import="cc.kafuu.Application" %>
+<%@ page import="cc.kafuu.jobcollection.Application" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <!DOCTYPE html>

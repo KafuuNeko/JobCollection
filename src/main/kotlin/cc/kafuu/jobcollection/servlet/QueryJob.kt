@@ -1,9 +1,8 @@
-package cc.kafuu.servlet
+package cc.kafuu.jobcollection.servlet
 
-import cc.kafuu.dao.DBTableJobs
-import cc.kafuu.utils.JsonUtils
+import cc.kafuu.jobcollection.dao.DBTableJobs
+import cc.kafuu.jobcollection.utils.JsonUtils
 import com.google.gson.JsonArray
-import com.google.gson.JsonObject
 import javax.servlet.annotation.WebServlet
 import javax.servlet.http.HttpServlet
 import javax.servlet.http.HttpServletRequest

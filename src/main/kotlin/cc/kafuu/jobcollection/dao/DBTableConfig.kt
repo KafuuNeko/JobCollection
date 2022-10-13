@@ -1,4 +1,4 @@
-package cc.kafuu.dao
+package cc.kafuu.jobcollection.dao
 
 import java.sql.ResultSet
 

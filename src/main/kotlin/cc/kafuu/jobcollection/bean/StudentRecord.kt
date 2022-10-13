@@ -1,6 +1,6 @@
-package cc.kafuu.bean
+package cc.kafuu.jobcollection.bean
 
-import cc.kafuu.ext.IToJsonObjectAble
+import cc.kafuu.jobcollection.ext.IToJsonObjectAble
 import com.google.gson.JsonObject
 
 data class StudentRecord(

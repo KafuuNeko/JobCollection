@@ -1,4 +1,4 @@
-package cc.kafuu.ext
+package cc.kafuu.jobcollection.ext
 
 import com.google.gson.JsonObject
 

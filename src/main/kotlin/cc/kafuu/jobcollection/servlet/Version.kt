@@ -1,4 +1,4 @@
-package cc.kafuu.servlet
+package cc.kafuu.jobcollection.servlet
 
 import javax.servlet.http.*
 import javax.servlet.annotation.*
