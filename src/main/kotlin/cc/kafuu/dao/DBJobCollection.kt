@@ -5,8 +5,20 @@ import java.sql.Connection
 import java.sql.DriverManager
 
 object DBJobCollection {
+    private var mConnect: Connection;
 
     val connect: Connection
+        get() {
+            synchronized(mConnect) {
+                if (!mConnect.isValid(5)) {
+                    if (!mConnect.isClosed) {
+                        mConnect.close()
+                    }
+                    mConnect = DriverManager.getConnection("jdbc:mysql://${Config.host}/${Config.dbName}", Config.user, Config.password)
+                }
+            }
+            return mConnect
+        }
 
     object Config {
         val host: String
@@ -28,9 +40,7 @@ object DBJobCollection {
 
     init {
         Class.forName("com.mysql.cj.jdbc.Driver")
-        connect =
-            DriverManager.getConnection("jdbc:mysql://${Config.host}/${Config.dbName}", Config.user, Config.password)
-        println("!!! Database connected")
+        mConnect = DriverManager.getConnection("jdbc:mysql://${Config.host}/${Config.dbName}", Config.user, Config.password)
     }
 
 }

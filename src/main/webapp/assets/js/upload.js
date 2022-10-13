@@ -1,3 +1,30 @@
+function uploadTaskAjax() {
+    document.forms[0].StudentID.value = document.forms[0].StudentID.value.replace(/\s/g, "")
+    document.forms[0].Name.value = document.forms[0].Name.value.replace(/(^\s*)|(\s*$)/g, "")
+    document.forms[0].Upload.disabled = true
+
+    $.ajax({
+        url: "job/upload",
+        type: "post",
+        data: new FormData(document.forms[0]),
+        cache: false,
+        processData: false,
+        contentType: false,
+        success: function (result) {
+            document.forms[0].Upload.disabled = false
+            if (result.code === 0) {
+                swal("提交结果", result.message, "success");
+            } else {
+                swal("提交结果", result.message, "error");
+            }
+        },
+        error: function () {
+            document.forms[0].Upload.disabled = false
+            swal("提交结果", "提交失败，请检查网络", "error");
+        }
+    })
+}
+
 function uploadTask(maxSize) {
     if (document.forms[0].JobID.value === "") {
         swal("表单不完整", "请选择正确的作业", "error");
@@ -21,36 +48,22 @@ function uploadTask(maxSize) {
         return;
     }
 
-    document.forms[0].StudentID.value = document.forms[0].StudentID.value.replace(/\s/g, "")
-    document.forms[0].Name.value = document.forms[0].Name.value.replace(/(^\s*)|(\s*$)/g, "")
+    let jobName = document.forms[0].JobID.options[parseInt(document.forms[0].JobID.selectedIndex)].text
 
-    document.forms[0].Upload.disabled = true
-
-    $.ajax({
-        url: "job/upload",
-        type: "post",
-        data: new FormData(document.forms[0]),
-        cache: false,
-        processData: false,
-        contentType: false,
-        success: function (result) {
-            document.forms[0].Upload.disabled = false
-            if (result.code === 0) {
-                swal("提交结果", result.message, "success");
-            } else {
-                swal("提交结果", result.message, "error");
-            }
-        },
-        error: function () {
-            document.forms[0].Upload.disabled = false
-            swal("提交结果", "提交失败，请检查网络", "error");
+    swal({
+        title: jobName,
+        text: "您当前选择提交的作业是「" + jobName + "」,请仔细确认选择无误后点击确认提交。",
+        dangerMode: true,
+        buttons: ["取消", "确认提交"]
+    }).then((status) => {
+        if (status) {
+            uploadTaskAjax()
         }
-    })
-
+    });
 }
 
 function studentIdChange() {
-    document.forms[0].StudentID.value = document.forms[0].StudentID.value.replace(/[^\d]/g,'')
+    document.forms[0].StudentID.value = document.forms[0].StudentID.value.replace(/[^\d]/g, '')
 
     if (document.forms[0].StudentID.value.length === 10) {
         document.forms[0].Name.disabled = true
