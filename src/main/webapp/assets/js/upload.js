@@ -1,6 +1,4 @@
 function uploadTaskAjax() {
-    document.forms[0].StudentID.value = document.forms[0].StudentID.value.replace(/\s/g, "")
-    document.forms[0].Name.value = document.forms[0].Name.value.replace(/(^\s*)|(\s*$)/g, "")
     document.forms[0].Upload.disabled = true
 
     $.ajax({
@@ -14,6 +12,42 @@ function uploadTaskAjax() {
             document.forms[0].Upload.disabled = false
             if (result.code === 0) {
                 swal("提交结果", result.message, "success");
+            } else {
+                swal("提交结果", result.message, "error");
+            }
+        },
+        error: function () {
+            document.forms[0].Upload.disabled = false
+            swal("提交结果", "提交失败，请检查网络", "error");
+        }
+    })
+}
+
+function checkTaskAjax() {
+    document.forms[0].Upload.disabled = true
+    let jobName = document.forms[0].JobID.options[parseInt(document.forms[0].JobID.selectedIndex)].text
+
+    $.ajax({
+        url: "upload/query",
+        type: "post",
+        data: "job_id=" + document.forms[0].JobID.value + "&student_id=" + document.forms[0].StudentID.value,
+        success: function (result) {
+            document.forms[0].Upload.disabled = false
+            if (result.code === 0) {
+                if (result.records_exist) {
+                    swal({
+                        icon: "warning",
+                        text: "您已经提交过「" + jobName + "」的作业，再次提交将覆盖之前提交的数据，是否继续提交？",
+                        dangerMode: true,
+                        buttons: ["取消", "继续提交"]
+                    }).then((status) => {
+                        if (status) {
+                            uploadTaskAjax()
+                        }
+                    });
+                } else {
+                    uploadTaskAjax()
+                }
             } else {
                 swal("提交结果", result.message, "error");
             }
@@ -48,6 +82,9 @@ function uploadTask(maxSize) {
         return;
     }
 
+    document.forms[0].StudentID.value = document.forms[0].StudentID.value.replace(/\s/g, "")
+    document.forms[0].Name.value = document.forms[0].Name.value.replace(/(^\s*)|(\s*$)/g, "")
+
     let jobName = document.forms[0].JobID.options[parseInt(document.forms[0].JobID.selectedIndex)].text
 
     swal({
@@ -57,7 +94,7 @@ function uploadTask(maxSize) {
         buttons: ["取消", "确认提交"]
     }).then((status) => {
         if (status) {
-            uploadTaskAjax()
+            checkTaskAjax()
         }
     });
 }
