@@ -17,4 +17,25 @@ object DBTableJobs {
         }
         return records
     }
+
+    public fun queryJobById(jobId: Long) =
+        DBJobCollection.connect.prepareStatement(
+            "SELECT * FROM jobs WHERE job_id=?",
+            ResultSet.TYPE_SCROLL_INSENSITIVE,
+            ResultSet.CONCUR_READ_ONLY
+        )?.use { stmt ->
+            stmt.setLong(1, jobId)
+            stmt.executeQuery()?.use {resultSet ->
+                if (resultSet.first()) {
+                    JobRecord(
+                        resultSet.getLong(1),
+                        resultSet.getString(2),
+                        resultSet.getTimestamp(3),
+                        resultSet.getTimestamp(4)
+                    )
+                } else {
+                    null
+                }
+            }
+        }
 }

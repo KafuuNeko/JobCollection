@@ -18,7 +18,6 @@
 
 <body>
 
-<!-- 标题栏未完成 待定
 <nav class="navbar navbar-light navbar-expand-md py-3">
     <div class="container"><a class="navbar-brand d-flex align-items-center" href="#"><span
             class="bs-icon-sm bs-icon-rounded bs-icon-primary d-flex justify-content-center align-items-center me-2 bs-icon"><svg
@@ -34,19 +33,17 @@
         <div class="collapse navbar-collapse" id="navcol-1">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item"><a class="nav-link active" href="#">作业提交</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">关于</a></li>
+                <li class="nav-item"><a class="nav-link" href="missing.jsp">缺交情况</a></li>
             </ul>
-            <button class="btn btn-primary" type="button">管理</button>
+            <!--<button class="btn btn-primary" type="button">管理</button>!-->
         </div>
     </div>
 </nav>
-!-->
 
 <section class="position-relative py-4 py-xl-5">
     <div class="container">
         <div class="row mb-5">
             <div class="col-md-8 col-xl-6 text-center mx-auto">
-                <h2>作业提交</h2>
                 <p class="w-lg-50">请务必仔细检查所选的作业并核对姓名学号</p>
                 <p class="w-lg-50">输入学号可自动取得姓名，或输入姓名后回车自动取得学号。</p>
             </div>
