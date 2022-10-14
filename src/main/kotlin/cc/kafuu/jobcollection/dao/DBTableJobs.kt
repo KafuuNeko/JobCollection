@@ -7,7 +7,7 @@ object DBTableJobs {
     public fun getAllJob(validOnly: Boolean = true): List<JobRecord> {
         val records = ArrayList<JobRecord>()
         DBJobCollection.connect.prepareStatement(
-            "SELECT * FROM jobs WHERE end_time>now() && start_time<now()",
+            "SELECT * FROM jobs ${if (validOnly) "WHERE end_time>now() && start_time<now()" else ""}",
             ResultSet.TYPE_SCROLL_INSENSITIVE,
             ResultSet.CONCUR_READ_ONLY
         )?.executeQuery()?.use {
