@@ -24,27 +24,27 @@ class TokenManage {
     fun newToken(): String {
         synchronized(mTokenMap) {
             val identifier = StringBuffer().apply {
-                var count = 0
+                var offset = mPreIdentifierHash
 
                 setLength(mIdentifierLength)
                 do {
-                    Random(System.currentTimeMillis() + mPreIdentifierHash + count).apply {
+                    Random(System.currentTimeMillis() + offset).apply {
                         for (i in indices) {
                             setCharAt(i, mTokenSymbolTable[nextInt(mTokenSymbolTable.indices)])
                         }
+                        offset = offset * 31 + nextInt()
                     }
-                    count += 1
                 } while (mTokenMap.containsKey(toString()))
 
             }.toString()
+
+            mPreIdentifierHash = identifier.hashCode()
 
             val currentTimeMillis = System.currentTimeMillis()
             Token(identifier, currentTimeMillis, currentTimeMillis + mTokenValid).apply {
                 mTokenMap[this.identifier] = HashMap()
                 mTokenHeap.add(this)
             }
-
-            mPreIdentifierHash = identifier.hashCode()
 
             return identifier
         }
