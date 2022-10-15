@@ -5,6 +5,7 @@ import cc.kafuu.jobcollection.utils.Heap
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import mu.KotlinLogging
+import java.util.*
 import kotlin.random.Random
 import kotlin.random.nextInt
 
@@ -16,7 +17,9 @@ object Application {
     val uploadMaxSize: Long
 
     val token = TokenManage()
+    private val mTokenGcTimer = Timer()
 
+    //读app.json配置
     init {
         val reader = javaClass.classLoader?.getResourceAsStream("app.json")?.bufferedReader()
         assert(reader != null)
@@ -31,6 +34,18 @@ object Application {
         mLogger.info("UploadMaxSize: $uploadMaxSize")
 
         mLogger.info("Read config completed")
+    }
+
+    //初始化Token回收计时器
+    init {
+        mTokenGcTimer.schedule(object : TimerTask() {
+            override fun run() {
+                val count = token.recoveryFailureToken()
+                if (count > 0) {
+                    mLogger.info("Recovery failure token: $count")
+                }
+            }
+        }, 1000, 1000)
     }
 
 

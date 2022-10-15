@@ -6,7 +6,6 @@ import kotlin.random.Random
 import kotlin.random.nextInt
 
 class TokenManage {
-
     companion object {
         private const val mTokenSymbolTable = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
         private const val mTokenValid: Long = 86400000
@@ -21,7 +20,7 @@ class TokenManage {
     /*
     * 构造一个新的Token，并返回新Token的identifier
     * */
-    fun newToken(): String {
+    public fun newToken(): String {
         synchronized(mTokenMap) {
             val identifier = StringBuffer().apply {
                 var offset = mPreIdentifierHash
@@ -51,20 +50,38 @@ class TokenManage {
     }
 
     /**
-     * 回收失效的Token
+     * 回收失效的Token, 并返回回收的数量
      * */
-    fun recoveryFailureToken() {
+    public fun recoveryFailureToken(): Int {
+
         synchronized(mTokenMap) {
+            var count = 0
             val currentTimeMillis = System.currentTimeMillis()
             while (!mTokenHeap.isEmpty()) {
                 val token = mTokenHeap.top()
                 if (token.validTime <= currentTimeMillis) {
                     mTokenHeap.pop()
                     mTokenMap.remove(token.identifier)
+                    count += 1
                 } else {
                     break
                 }
             }
+            return count
         }
     }
+
+    public fun put(identifier: String, key: String, value: String) = synchronized(mTokenMap) {
+        if (mTokenMap.containsKey(identifier)) {
+            mTokenMap[identifier]?.put(key, value)
+            true
+        } else false
+    }
+
+    public fun get(identifier: String, key: String) = synchronized(mTokenMap) { mTokenMap[identifier]?.get(key) }
+    public fun remove(identifier: String, key: String) = synchronized(mTokenMap) { mTokenMap[identifier]?.remove(key) }
+    public fun containsKey(identifier: String, key: String) = synchronized(mTokenMap) { mTokenMap[identifier]?.containsKey(key) ?: false }
+
+
+    public fun containsIdentifier(identifier: String) = synchronized(mTokenMap) { mTokenMap.containsKey(identifier) }
 }
