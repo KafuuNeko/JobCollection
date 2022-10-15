@@ -37,7 +37,7 @@
 
 <body>
 <nav class="navbar navbar-light navbar-expand-md py-3">
-    <div class="container"><a class="navbar-brand d-flex align-items-center" href="#"><span
+    <div class="container"><a class="navbar-brand d-flex align-items-center" href="index.jsp"><span
             class="bs-icon-sm bs-icon-rounded bs-icon-primary d-flex justify-content-center align-items-center me-2 bs-icon"><svg
             xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16"
             class="bi bi-bezier">
@@ -53,7 +53,7 @@
                 <li class="nav-item"><a class="nav-link" href="index.jsp">作业提交</a></li>
                 <li class="nav-item"><a class="nav-link active" href="#">缺交情况</a></li>
             </ul>
-            <!--<button class="btn btn-primary" type="button">管理</button>!-->
+            <button class="btn btn-primary" type="button" href="administer">管理</button>
         </div>
     </div>
 </nav>
@@ -64,7 +64,11 @@
             <%
                 List<JobRecord> jobs = DBTableJobs.INSTANCE.getAllJob(false);
                 for (int i = 0; i < jobs.size(); ++i) {
-                    out.println("<li class=\"nav-item\"><a class=\"nav-link\" href=\"?job_id=" + jobs.get(i).getJobId() + "\">" + jobs.get(i).getJobName() + "</a></li>");
+                    String active = "";
+                    if (jobRecord != null && jobs.get(i).getJobId() == jobRecord.getJobId()) {
+                        active = "active";
+                    }
+                    out.println("<li class=\"nav-item\"><a class=\"nav-link " + active + " \" href=\"?job_id=" + jobs.get(i).getJobId() + "\">" + jobs.get(i).getJobName() + "</a></li>");
                 }
             %>
         </ul>
@@ -101,7 +105,7 @@
                         if (jobRecord == null) {
                             out.println("请选择要查询的作业");
                         } else {
-                            out.println("共查询到" +  total + "条缺交记录");
+                            out.println("共查询到" + total + "条缺交记录");
                         }
                     %></p>
                 </div>

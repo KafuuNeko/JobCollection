@@ -1,8 +1,12 @@
 package cc.kafuu.jobcollection
 
+import cc.kafuu.jobcollection.bean.Token
+import cc.kafuu.jobcollection.utils.Heap
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import mu.KotlinLogging
+import kotlin.random.Random
+import kotlin.random.nextInt
 
 object Application {
     private val mLogger = KotlinLogging.logger {}
@@ -10,6 +14,8 @@ object Application {
     val rootDirPath: String
     val config: JsonObject
     val uploadMaxSize: Long
+
+    val token = TokenManage()
 
     init {
         val reader = javaClass.classLoader?.getResourceAsStream("app.json")?.bufferedReader()
@@ -26,5 +32,7 @@ object Application {
 
         mLogger.info("Read config completed")
     }
+
+
 
 }

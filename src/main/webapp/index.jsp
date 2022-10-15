@@ -19,7 +19,7 @@
 <body>
 
 <nav class="navbar navbar-light navbar-expand-md py-3">
-    <div class="container"><a class="navbar-brand d-flex align-items-center" href="#"><span
+    <div class="container"><a class="navbar-brand d-flex align-items-center" href="index.jsp"><span
             class="bs-icon-sm bs-icon-rounded bs-icon-primary d-flex justify-content-center align-items-center me-2 bs-icon"><svg
             xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16"
             class="bi bi-bezier">
@@ -35,7 +35,7 @@
                 <li class="nav-item"><a class="nav-link active" href="#">作业提交</a></li>
                 <li class="nav-item"><a class="nav-link" href="missing.jsp">缺交情况</a></li>
             </ul>
-            <!--<button class="btn btn-primary" type="button">管理</button>!-->
+            <button class="btn btn-primary" type="button" href="administer">管理</button>
         </div>
     </div>
 </nav>

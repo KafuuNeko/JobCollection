@@ -16,8 +16,7 @@ class QueryUpload : HttpServlet() {
     override fun doPost(req: HttpServletRequest?, resp: HttpServletResponse?) {
         resp?.characterEncoding = "UTF-8"
         resp?.contentType = "application/json"
-
-
+        
         val studentId = req?.getParameter("student_id")?.toLongOrNull()
         val jobId = req?.getParameter("job_id")?.toLongOrNull()
 
