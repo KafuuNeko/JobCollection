@@ -8,7 +8,7 @@ class Heap<T>(val compare: (T, T) -> Boolean) {
 
     private val list = ArrayList<T>()
 
-    public fun firstOrNull() = synchronized(list) { list.firstOrNull() }
+    public fun topOrNull() = synchronized(list) { list.firstOrNull() }
     public fun top() = synchronized(list) { list.first() }
     public fun isEmpty() = synchronized(list) { list.isEmpty() }
 
@@ -51,7 +51,7 @@ class Heap<T>(val compare: (T, T) -> Boolean) {
         var current = index
 
         while (current > 0) {
-            val parent = current shr 1
+            val parent = ((current + 1) shr 1) - 1
             if (compare(list[current], list[parent])) {
                 swap(parent, current)
                 current = parent
@@ -91,12 +91,9 @@ class Heap<T>(val compare: (T, T) -> Boolean) {
      * 交换两个元素在列表中到位置
      * */
     private fun swap(a: Int, b: Int) {
-        if (a != b) {
-            val temp = list[a]
-            list[a] = list[b]
-            list[b] = temp
-        }
+        list[b] = list[a].also { list[a] = list[b] }
     }
+
 
 }
 
