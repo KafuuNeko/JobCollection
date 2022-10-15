@@ -13,27 +13,40 @@ class TokenManage {
         private const val mIdentifierLength = 32
     }
 
-    private val mTokenMap = HashMap<String, String>()
+    private var mPreIdentifierHash = mTokenSymbolTable.hashCode()
+    private val mTokenMap = HashMap<String, HashMap<String, String>>()
     private val mTokenHeap = Heap<Token> { a, b -> a.validTime < b.validTime }
 
-    fun newToken(user: String): Token {
+
+    /*
+    * 构造一个新的Token，并返回新Token的identifier
+    * */
+    fun newToken(): String {
         synchronized(mTokenMap) {
             val identifier = StringBuffer().apply {
+                var count = 0
+
                 setLength(mIdentifierLength)
                 do {
-                    Random(System.currentTimeMillis().toInt() xor user.hashCode()).apply {
+                    Random(System.currentTimeMillis() + mPreIdentifierHash + count).apply {
                         for (i in indices) {
                             setCharAt(i, mTokenSymbolTable[nextInt(mTokenSymbolTable.indices)])
                         }
                     }
+                    count += 1
                 } while (mTokenMap.containsKey(toString()))
+
             }.toString()
 
             val currentTimeMillis = System.currentTimeMillis()
-            return Token(identifier, currentTimeMillis, currentTimeMillis + mTokenValid).apply {
-                mTokenMap[this.identifier] = user
+            Token(identifier, currentTimeMillis, currentTimeMillis + mTokenValid).apply {
+                mTokenMap[this.identifier] = HashMap()
                 mTokenHeap.add(this)
             }
+
+            mPreIdentifierHash = identifier.hashCode()
+
+            return identifier
         }
     }
 
