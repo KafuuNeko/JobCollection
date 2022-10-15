@@ -50,6 +50,7 @@ class Heap<T>(val compare: (T, T) -> Boolean) {
     private fun fixUp(index: Int) {
         var current = index
 
+        //将当前节点与其父节点比对，如果父节点比当前节点大(小)，则替换并将父节点作为下一个节点重复步骤
         while (current > 0) {
             val parent = ((current + 1) shr 1) - 1
             if (compare(list[current], list[parent])) {
@@ -71,14 +72,14 @@ class Heap<T>(val compare: (T, T) -> Boolean) {
             val rightChild = (index + 1) shl 1
             val leftChild = rightChild - 1
 
-            //取出两个孩子中最小的孩子
+            //取出两个孩子中最小(最大)的孩子
             val minChild = when {
                 leftChild >= list.size -> break
                 rightChild >= list.size -> leftChild
                 else -> if (compare(list[leftChild], list[rightChild])) leftChild else rightChild
             }
 
-            //如果最小孩子节点的值比父节点的值小，则替换父节点的值与最小孩子节点的值
+            //如果最小孩子节点的值比父节点的值小(大)，则替换父节点的值与最小孩子节点的值
             //并将最小孩子节点作为下次的父节点，重复流程
             if (compare(list[minChild], list[index])) {
                 swap(index, minChild)
