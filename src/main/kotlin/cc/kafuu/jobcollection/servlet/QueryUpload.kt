@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServlet
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
-@WebServlet(name = "query_upload", value = ["/upload/query"])
+@WebServlet(name = "query_upload", value = ["/api/upload/query"])
 class QueryUpload : HttpServlet() {
     override fun doGet(req: HttpServletRequest?, resp: HttpServletResponse?) {
         doPost(req, resp)

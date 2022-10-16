@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
-@WebServlet(name = "query_job", value = ["/job/query"])
+@WebServlet(name = "query_job", value = ["/api/job/query"])
 class QueryJob : HttpServlet() {
     override fun doGet(req: HttpServletRequest?, resp: HttpServletResponse?) {
         doPost(req, resp)

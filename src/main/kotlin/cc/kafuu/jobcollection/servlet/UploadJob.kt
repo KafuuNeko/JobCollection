@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 import kotlin.io.path.Path
 
-@WebServlet(name = "upload_job", value = ["/job/upload"])
+@WebServlet(name = "upload_job", value = ["/api/job/upload"])
 class UploadJob : HttpServlet() {
     override fun doGet(req: HttpServletRequest?, resp: HttpServletResponse?) {
         resp?.contentType = "text/html"

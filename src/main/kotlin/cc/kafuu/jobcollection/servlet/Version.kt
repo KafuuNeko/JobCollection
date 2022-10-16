@@ -3,7 +3,7 @@ package cc.kafuu.jobcollection.servlet
 import javax.servlet.http.*
 import javax.servlet.annotation.*
 
-@WebServlet(name = "version", value = ["/version"])
+@WebServlet(name = "version", value = ["/api/version"])
 class Version: HttpServlet() {
     private lateinit var message: String
 

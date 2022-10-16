@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServlet
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
-@WebServlet(name = "query_student", value = ["/student/query"])
+@WebServlet(name = "query_student", value = ["/api/student/query"])
 class QueryStudent : HttpServlet() {
     override fun doGet(req: HttpServletRequest?, resp: HttpServletResponse?) {
         doPost(req, resp)

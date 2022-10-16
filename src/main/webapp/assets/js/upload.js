@@ -2,7 +2,7 @@ function uploadTaskAjax() {
     document.forms[0].Upload.disabled = true
 
     $.ajax({
-        url: "job/upload",
+        url: "api/job/upload",
         type: "post",
         data: new FormData(document.forms[0]),
         cache: false,
@@ -28,7 +28,7 @@ function checkTaskAjax() {
     let jobName = document.forms[0].JobID.options[parseInt(document.forms[0].JobID.selectedIndex)].text
 
     $.ajax({
-        url: "upload/query",
+        url: "api/upload/query",
         type: "post",
         data: "job_id=" + document.forms[0].JobID.value + "&student_id=" + document.forms[0].StudentID.value,
         success: function (result) {
@@ -105,7 +105,7 @@ function studentIdChange() {
     if (document.forms[0].StudentID.value.length === 10) {
         document.forms[0].Name.disabled = true
         $.ajax({
-            url: "student/query",
+            url: "api/student/query",
             type: "post",
             data: "query=student&student_id=" + document.forms[0].StudentID.value.replace(/(^\s*)|(\s*$)/g, ""),
             success: function (result) {
@@ -126,7 +126,7 @@ function nameChange() {
         document.forms[0].StudentID.disabled = true
         let name = document.forms[0].Name.value.replace(/(^\s*)|(\s*$)/g, "")
         $.ajax({
-            url: "student/query",
+            url: "api/student/query",
             type: "post",
             data: "query=student&student_name=" + name,
             success: function (result) {
