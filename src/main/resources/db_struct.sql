@@ -4,7 +4,7 @@ create table if not exists `config`
     `key`   VARCHAR(128) NOT NULL,
     `value` VARCHAR(255) NOT NULL,
     PRIMARY KEY (id)
-) charset = utf8;
+) charset = utf8mb4;
 
 create table if not exists `jobs`
 (
@@ -13,7 +13,7 @@ create table if not exists `jobs`
     `start_time` DATETIME     NOT NULL,
     `end_time`   DATETIME     NOT NULL,
     PRIMARY KEY (job_id)
-) charset = utf8;
+) charset = utf8mb4;
 
 create table if not exists `students`
 (
@@ -23,7 +23,7 @@ create table if not exists `students`
     `student_class` INT UNSIGNED NOT NULL,
     `student_major` VARCHAR(128) NOT NULL,
     PRIMARY KEY (student_id)
-) charset = utf8;
+) charset = utf8mb4;
 
 create table if not exists `uploads`
 (
@@ -34,5 +34,5 @@ create table if not exists `uploads`
     PRIMARY KEY (job_id, student_id),
     FOREIGN KEY (job_id) REFERENCES jobs (job_id),
     FOREIGN KEY (student_id) REFERENCES students (student_id)
-) charset = utf8;
+) charset = utf8mb4;
 
