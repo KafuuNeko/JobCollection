@@ -1,0 +1,23 @@
+{
+  "groups": [
+    {
+      "name": "admin",
+      "permissions": {
+        "add_job": true,
+        "update_job": true,
+        "remove_job": true,
+
+        "add_student": true,
+        "update_student": true,
+        "remove_student": true
+      }
+    }
+  ],
+  "users": [
+    {
+      "username": "admin",
+      "password": "171117488",
+      "group": "admin"
+    }
+  ]
+}

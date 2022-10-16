@@ -1,13 +1,13 @@
 package cc.kafuu.jobcollection
 
-import cc.kafuu.jobcollection.bean.Token
-import cc.kafuu.jobcollection.utils.Heap
+import cc.kafuu.jobcollection.bean.User
+import cc.kafuu.jobcollection.bean.UserGroup
+import cc.kafuu.jobcollection.utils.BytesUtils
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import mu.KotlinLogging
+import java.security.MessageDigest
 import java.util.*
-import kotlin.random.Random
-import kotlin.random.nextInt
 
 object Application {
     private val mLogger = KotlinLogging.logger {}
@@ -19,6 +19,9 @@ object Application {
     val token = TokenManage()
     private val mTokenGcTimer = Timer()
 
+    val users = kotlin.collections.HashMap<String, User>()
+    val userGroups = kotlin.collections.HashMap<String, UserGroup>()
+
     //读app.json配置
     init {
         val reader = javaClass.classLoader?.getResourceAsStream("app.json")?.bufferedReader()
@@ -26,7 +29,7 @@ object Application {
 
         config = Gson().fromJson(reader, JsonObject::class.java)
 
-        val uploadConfig = config.get("upload")?.asJsonObject
+        val uploadConfig = config["upload"]?.asJsonObject
         rootDirPath = uploadConfig?.get("root_dir")?.asString ?: "./JobCollection"
         uploadMaxSize = uploadConfig?.asJsonObject?.get("max_size")?.asLong ?: 33554432
 
@@ -48,6 +51,27 @@ object Application {
         }, 1000, 1000)
     }
 
+    init {
+        val reader = javaClass.classLoader?.getResourceAsStream("users.json")?.bufferedReader()
+        assert(reader != null)
 
+        val usersJson = Gson().fromJson(reader, JsonObject::class.java)
+        for (user in usersJson["users"].asJsonArray) {
+            val username = user.asJsonObject["username"].asString
+            val password = BytesUtils.bytesToHexString(
+                MessageDigest.getInstance("SHA-1")
+                    .digest("job_collection::user@$username/${user.asJsonObject["password"].asString}".toByteArray())
+            )
+            User(
+                username,
+                password,
+                user.asJsonObject["group"].asString
+            ).apply {
+                users[name] = this
+            }
+
+            mLogger.info("Read user: $username/$password")
+        }
+    }
 
 }

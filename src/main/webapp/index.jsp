@@ -49,30 +49,27 @@
             </div>
         </div>
 
+        <%List<JobRecord> jobs = DBTableJobs.INSTANCE.getAllJob(true);%>
+
         <div class="row d-flex justify-content-center">
             <div class="col-md-6 col-xl-4">
                 <div class="card mb-5">
                     <div class="card-body d-flex flex-column align-items-center">
                         <form class="text-center" method="post" enctype="multipart/form-data">
                             <div class="mb-3"><select name="JobID" class="form-select">
-                                <optgroup label="请选择作业">
+                                <optgroup label=<%=(jobs.isEmpty() ? "当前没有作业" : "请选择作业")%>>
+                                    <option selected hidden disabled value="">点击选择您要提交的作业</option>
                                     <%
-                                        List<JobRecord> jobs = DBTableJobs.INSTANCE.getAllJob(true);
                                         for (int i = 0; i < jobs.size(); ++i) {
-
                                             out.println("<option value=\"" + jobs.get(i).getJobId() + "\" selected=\"" + ((i == 0) ? "true" : "false") + "\">" + jobs.get(i).getJobName() + "</option>");
                                         }
                                     %>
                                 </optgroup>
                             </select></div>
-                            <div class="mb-3"><input class="form-control" type="text" name="StudentID" placeholder="学号"
-                                                     oninput="studentIdChange()"></div>
-                            <div class="mb-3"><input class="form-control" type="text" name="Name" placeholder="姓名">
-                            </div>
+                            <div class="mb-3"><input class="form-control" type="text" name="StudentID" placeholder="学号" oninput="studentIdChange()"></div>
+                            <div class="mb-3"><input class="form-control" type="text" name="Name" placeholder="姓名"></div>
                             <div class="mb-3"><input class="form-control" type="file" name="File"></div>
-                            <div class="mb-3"><input class="btn btn-primary d-block w-100" type="button" name="Upload"
-                                                     onclick="uploadTask(<%=Application.INSTANCE.getUploadMaxSize()%>)"
-                                                     value="提交作业"></div>
+                            <div class="mb-3"><input class="btn btn-primary d-block w-100" type="button" name="Upload" onclick="uploadTask(<%=Application.INSTANCE.getUploadMaxSize()%>)" value="提交作业"></div>
                         </form>
                     </div>
                 </div>
@@ -84,23 +81,19 @@
 <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 <script src="assets/js/jquery-3.6.1.min.js"></script>
 <script src="assets/js/sweetalert.min.js"></script>
-
 <script src="assets/js/upload.js?version=1.6"></script>
 
 <%
-    String jobId = request.getParameter("job_id");
     int jobSelectIndex = 0;
-    if (jobId != null) {
-        try {
-            long longJobId = Long.parseLong(jobId);
-            for (int i = 0; i < jobs.size(); ++i) {
-                if (jobs.get(i).getJobId() == longJobId) {
-                    jobSelectIndex = i;
-                }
+    try {
+        long jobId = Long.parseLong(request.getParameter("job_id"));
+        for (int i = 0; i < jobs.size(); ++i) {
+            if (jobs.get(i).getJobId() == jobId) {
+                jobSelectIndex = i + 1;
+                break;
             }
-        } catch (Exception e) {
-            jobSelectIndex = 0;
         }
+    } catch (Exception ignored) {
     }
 %>
 
