@@ -52,11 +52,11 @@ object DBTableStudents {
         return records
     }
 
-    public fun queryListOfMissingAssignments(jobId: Long): List<StudentRecord> {
+    public fun queryListOfStatistics(jobId: Long, isMissing: Boolean): List<StudentRecord> {
         val students = ArrayList<StudentRecord>()
 
         DBJobCollection.connect.prepareStatement(
-            "SELECT * FROM students WHERE student_id NOT IN(SELECT uploads.student_id FROM uploads WHERE uploads.job_id = ?)",
+            "SELECT * FROM students WHERE student_id ${if (isMissing) "NOT IN" else "IN"} (SELECT uploads.student_id FROM uploads WHERE uploads.job_id = ?)",
             ResultSet.TYPE_SCROLL_INSENSITIVE,
             ResultSet.CONCUR_READ_ONLY
         )?.use { stmt ->

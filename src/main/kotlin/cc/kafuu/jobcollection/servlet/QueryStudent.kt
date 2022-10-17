@@ -58,7 +58,7 @@ class QueryStudent : HttpServlet() {
      * 查询未交某个作业的用户列表
      * */
     private fun queryMissingAssignmentsStudent(jobId: Long?) = jobId?.let {id ->
-        val list = DBTableStudents.queryListOfMissingAssignments(id)
+        val list = DBTableStudents.queryListOfStatistics(id, true)
         val result = JsonUtils.makeBaseResultJson(0, "查询成功")
         result.addProperty("total", list.size)
         result.add("students", list.toJsonArray())

@@ -3,23 +3,18 @@
 <%@ page import="java.util.List" %>
 <%@ page import="cc.kafuu.jobcollection.bean.StudentRecord" %>
 <%@ page import="cc.kafuu.jobcollection.dao.DBTableStudents" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 
 <%
-    int total = 0;
-    List<StudentRecord> studentRecordList = null;
+    List<StudentRecord> committedList = null;
     JobRecord jobRecord = null;
     try {
         long jobId = Long.parseLong(request.getParameter("job_id"));
-
         jobRecord = DBTableJobs.INSTANCE.queryJobById(jobId);
-
         if (jobRecord != null) {
-            studentRecordList = DBTableStudents.INSTANCE.queryListOfMissingAssignments(jobId);
-            total = studentRecordList.size();
+            committedList = DBTableStudents.INSTANCE.queryListOfStatistics(jobId, true);
         }
-    } catch (Exception e) {
-        //e.printStackTrace();
+    } catch (Exception ignored) {
     }
 %>
 
@@ -63,12 +58,12 @@
         <ul class="nav nav-pills flex-column border rounded d-sm-flex">
             <%
                 List<JobRecord> jobs = DBTableJobs.INSTANCE.getAllJob(false);
-                for (int i = 0; i < jobs.size(); ++i) {
+                for (JobRecord job : jobs) {
                     String active = "";
-                    if (jobRecord != null && jobs.get(i).getJobId() == jobRecord.getJobId()) {
+                    if (jobRecord != null && job.getJobId() == jobRecord.getJobId()) {
                         active = "active";
                     }
-                    out.println("<li class=\"nav-item\"><a class=\"nav-link " + active + " \" href=\"?job_id=" + jobs.get(i).getJobId() + "\">" + jobs.get(i).getJobName() + "</a></li>");
+                    out.println("<li class=\"nav-item\"><a class=\"nav-link " + active + " \" href=\"?job_id=" + job.getJobId() + "\">" + job.getJobName() + "</a></li>");
                 }
             %>
         </ul>
@@ -85,12 +80,12 @@
             </thead>
             <tbody>
             <%
-                if (studentRecordList != null) {
-                    for (int index = 0; index < studentRecordList.size(); ++index) {
+                if (committedList != null) {
+                    for (int index = 0; index < committedList.size(); ++index) {
                         out.println("<tr>");
                         out.println("<th scope=\"row\">" + (index + 1) + "</th>");
-                        out.println("<td>" + studentRecordList.get(index).getStudentId() + "</td>");
-                        out.println("<td>" + studentRecordList.get(index).getStudentName() + "</td>");
+                        out.println("<td>" + committedList.get(index).getStudentId() + "</td>");
+                        out.println("<td>" + committedList.get(index).getStudentName() + "</td>");
                         out.println("</tr>");
                     }
                 }
@@ -105,7 +100,7 @@
                         if (jobRecord == null) {
                             out.println("请选择要查询的作业");
                         } else {
-                            out.println("共查询到" + total + "条缺交记录");
+                            out.println("共查询到" + ((committedList == null) ? 0 : committedList.size()) + "条缺交记录");
                         }
                     %></p>
                 </div>
