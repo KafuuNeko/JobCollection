@@ -8,7 +8,7 @@ import kotlin.random.nextInt
 class TokenManage {
     companion object {
         private const val mTokenSymbolTable = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        private const val mTokenValid: Long = 86400000
+        private const val mTokenValid: Long = 1800000
         private const val mIdentifierLength = 32
     }
 
