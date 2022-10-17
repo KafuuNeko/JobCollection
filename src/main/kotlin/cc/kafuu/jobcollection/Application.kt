@@ -55,6 +55,7 @@ object Application {
         val reader = javaClass.classLoader?.getResourceAsStream("users.json")?.bufferedReader()
         assert(reader != null)
 
+        //save sha1(job_collection::password@password)
         val usersJson = Gson().fromJson(reader, JsonObject::class.java)
         for (user in usersJson["users"].asJsonArray) {
             val username = user.asJsonObject["username"].asString
