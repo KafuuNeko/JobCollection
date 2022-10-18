@@ -99,7 +99,7 @@ object DBTableStudents {
                 stmt.setString(3, record.studentSex)
                 stmt.setInt(4, record.studentClass)
                 stmt.setString(5, record.studentMajor)
-                stmt?.executeUpdate() > 0
+                stmt.executeUpdate() > 0
             } ?: false
 
 }
