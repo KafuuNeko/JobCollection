@@ -78,4 +78,28 @@ object DBTableStudents {
 
         return students;
     }
+
+    //student_id | student_name | student_sex | student_class | student_major
+    private fun addStudent(studentName: String, studentSex: String, studentClass: Int, studentMajor: String) =
+        DBJobCollection.connect.prepareStatement("INSERT INTO students(student_name,student_sex,student_class,student_major) VALUES(?, ?, ?, ?)")
+            ?.use { stmt ->
+                stmt.setString(1, studentName)
+                stmt.setString(2, studentSex)
+                stmt.setInt(3, studentClass)
+                stmt.setString(4, studentMajor)
+
+                stmt.executeUpdate() > 0
+            } ?: false
+
+    private fun updateStudent(record: StudentRecord) =
+        DBJobCollection.connect.prepareStatement("UPDATE students SET student_id = ? WHERE student_name = ?, student_sex = ?, student_class = ?, student_major = ?")
+            ?.use { stmt ->
+                stmt.setLong(1, record.studentId)
+                stmt.setString(2, record.studentName)
+                stmt.setString(3, record.studentSex)
+                stmt.setInt(4, record.studentClass)
+                stmt.setString(5, record.studentMajor)
+                stmt?.executeUpdate() > 0
+            } ?: false
+
 }
